@@ -1,28 +1,20 @@
-// Gerador de Senhas em TypeScript
-
 function generatePassword(length: number): string {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
-    let password = "";
+    const characters: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let password: string = "";
 
     for (let i = 0; i < length; i++) {
-        // ERRO: Math.ceil pode gerar um índice fora dos limites do array, causando 'undefined'.
-        // const randomIndex = Math.ceil(Math.random() * characters.length); 
-        
-        // CORREÇÃO: Substituímos Math.ceil por Math.floor para evitar índices inválidos.
-        const randomIndex = Math.floor(Math.random() * characters.length); 
+        let randomIndex: number;
+
+        do {
+            randomIndex = Math.floor(Math.random() * characters.length);
+        } while (characters[randomIndex] === password[password.length - 1]);
+
         password += characters[randomIndex];
     }
 
     return password;
 }
 
-const passwordLength = 12; 
-const newPassword = generatePassword(passwordLength);
+const passwordLength: number = 8;
+const newPassword: string = generatePassword(passwordLength);
 console.log("Senha gerada:", newPassword);
-
-// Exemplos de expansões:
-// - Adicionar opções para escolher tipos específicos de caracteres.
-// - Garantir que a senha tenha pelo menos um caractere de cada tipo selecionado.
-// - Implementar uma interface para o usuário definir as preferências.
-
-
